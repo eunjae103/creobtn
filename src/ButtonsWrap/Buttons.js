@@ -3,19 +3,54 @@ import styled from "styled-components";
 
 const Buttons = () => {
   const [selectButtons, setSelectButtons] = useState([
-    { id: 1, text: "버튼1" },
-    { id: 2, text: "버튼2" },
-    { id: 2, text: "버튼3" },
-    { id: 2, text: "버튼4" },
-    { id: 2, text: "버튼5" },
+    { id: 1, text: "1팟" },
+    { id: 2, text: "2팟" },
+    { id: 3, text: "3팟" },
+    { id: 4, text: "4팟" },
+    { id: 5, text: "5팟" },
+    { id: 6, text: "6팟" },
   ]);
-  const [names, setNames] = useState([
-    { id: 1, name: "끔" },
-    { id: 2, name: "약불" },
-    { id: 3, name: "중불" },
-    { id: 4, name: "강불" },
+  const [leftButtons, setLeftButtons] = useState([
+    { id: 1, text: "끔" },
+    { id: 2, text: "약불" },
+    { id: 3, text: "중불" },
+    { id: 4, text: "강불" },
   ]);
 
+  const [potAngleButtons, setPotAngleButtons] = useState([
+    { id: 1, text: "재료담기" },
+    { id: 2, text: "면요리" },
+    { id: 3, text: "기본요리" },
+    { id: 4, text: "음식담기" },
+    { id: 5, text: "세척준비" },
+  ]);
+
+  const [potSpinButtons, setSpinButtons] = useState([
+    { id: 1, text: "역회전" },
+    { id: 2, text: "정지" },
+    { id: 3, text: "원점정지" },
+    { id: 4, text: "정회전" },
+  ]);
+
+  const [cleanButtons, setCleanButtons] = useState([
+    { id: 1, text: "세척중" },
+    { id: 2, text: "정지" },
+  ]);
+
+  const [rightButtons, setRightButtons] = useState([
+    { id: 1, text: "끔" },
+    { id: 2, text: "약불" },
+    { id: 3, text: "중불" },
+    { id: 4, text: "강불" },
+  ]);
+  const [recipeName, setRecipeName] = useState("");
+  const [recipeMemo, setRecipeMemo] = useState("");
+  const onChangeName = (e) => {
+    setRecipeName(e.target.value);
+  };
+  const onChangeMemo = (e) => {
+    setRecipeMemo(e.target.value);
+  };
   return (
     <>
       <SelectBtnWrap>
@@ -27,7 +62,7 @@ const Buttons = () => {
       </SelectBtnWrap>
 
       <ConditionWrap>
-        <h3>2조리부 : 0분 25초</h3>
+        <h3>{selectButtons.text}조리부 : 0분 0초</h3>
         <button>세척가능</button>
       </ConditionWrap>
 
@@ -35,49 +70,65 @@ const Buttons = () => {
         <LeftInduction>
           <h4>인덕션왼쪽</h4>
           <ul>
-            {names.map((names) => {
-              return <li key={names.id}>{names.name}</li>;
+            {leftButtons.map((b) => {
+              return <li key={b.id}>{b.text}</li>;
             })}
           </ul>
         </LeftInduction>
+
         <MiddleInduction>
           <PotAngleWrap>
             <h4>팟각도</h4>
             <ul>
-              <li>재료담기</li>
-              <li>면요리</li>
-              <li>기본요리</li>
-              <li>음식담기</li>
-              <li>세척준비</li>
+              {potAngleButtons.map((b) => {
+                return <li key={b.id}>{b.text}</li>;
+              })}
             </ul>
           </PotAngleWrap>
           <PotSpinWrap>
             <h4>팟회전</h4>
             <ul>
-              <li>역회전</li>
-              <li>정지</li>
-              <li>원점정지</li>
-              <li>정회전</li>
+              {potSpinButtons.map((b) => {
+                return <li key={b.id}>{b.text}</li>;
+              })}
             </ul>
           </PotSpinWrap>
           <CleanWrap>
             <h4>세척</h4>
             <ul>
-              <li>세척중</li>
-              <li>정지</li>
+              {cleanButtons.map((b) => {
+                return <li key={b.id}>{b.text}</li>;
+              })}
             </ul>
           </CleanWrap>
         </MiddleInduction>
         <RigthInduction>
           <h4>인덕션오른쪽</h4>
           <ul>
-            <li>끔</li>
-            <li>약불</li>
-            <li>중불</li>
-            <li>강불</li>
+            {rightButtons.map((b) => {
+              return <li key={b.id}>{b.text}</li>;
+            })}
           </ul>
         </RigthInduction>
       </InductionWrap>
+      <Memowrap>
+        <input
+          type="text"
+          value={recipeName}
+          onChange={onChangeName}
+          placeholder="레시피 이름을 입력해주세요."
+        ></input>
+        <textarea
+          value={recipeMemo}
+          onChange={onChangeMemo}
+          placeholder="메모를 입력해주세요."
+        ></textarea>
+        <div>
+          <p>레시피 : {recipeName}</p>
+          <p>메모 : {recipeMemo}</p>
+          <p>기기작동기록 : </p>
+        </div>
+      </Memowrap>
     </>
   );
 };
@@ -85,7 +136,7 @@ const SelectBtnWrap = styled.div`
   display: flex;
   justify-content: center;
   margin: 0 auto;
-  padding: 50px 0;
+  padding: 20px 0;
 `;
 
 const SelectBtn = styled.div`
@@ -111,11 +162,10 @@ const SelectBtn = styled.div`
 `;
 
 const ConditionWrap = styled.div`
-  border: 1px solid red;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 20px 0;
+  padding-bottom: 20px;
   h3 {
     border: 1px solid red;
     font-size: 1.5rem;
@@ -152,8 +202,8 @@ const LeftInduction = styled.div`
     padding: 0;
   }
   li {
-    width: 100px;
-    line-height: 100px;
+    width: 90px;
+    line-height: 90px;
     text-align: center;
     font-size: 1rem;
     margin-bottom: 20px;
@@ -198,8 +248,8 @@ const PotAngleWrap = styled.div`
     padding: 0;
   }
   li {
-    width: 100px;
-    line-height: 100px;
+    width: 90px;
+    line-height: 90px;
     text-align: center;
     font-size: 1rem;
     margin-right: 20px;
@@ -242,8 +292,8 @@ const PotSpinWrap = styled.div`
     padding: 0;
   }
   li {
-    width: 100px;
-    line-height: 100px;
+    width: 90px;
+    line-height: 90px;
     text-align: center;
     font-size: 1rem;
     margin-right: 20px;
@@ -276,8 +326,8 @@ const CleanWrap = styled.div`
     padding: 0;
   }
   li {
-    width: 100px;
-    line-height: 100px;
+    width: 90px;
+    line-height: 90px;
     text-align: center;
     font-size: 1rem;
     margin-right: 20px;
@@ -311,8 +361,8 @@ const RigthInduction = styled.div`
     padding: 0;
   }
   li {
-    width: 100px;
-    line-height: 100px;
+    width: 90px;
+    line-height: 90px;
     text-align: center;
     font-size: 1rem;
     margin-bottom: 20px;
@@ -327,6 +377,20 @@ const RigthInduction = styled.div`
       background: #a0c657;
       color: #fff;
     }
+  }
+`;
+
+const Memowrap = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 500px;
+  margin: 50px auto;
+  input {
+    height: 30px;
+  }
+  textarea {
+    margin-top: 10px;
+    height: 100px;
   }
 `;
 
