@@ -1,29 +1,43 @@
-import React from "react";
+import { useState } from "react";
 import styled from "styled-components";
 
 const Buttons = () => {
+  const [selectButtons, setSelectButtons] = useState([
+    { id: 1, text: "버튼1" },
+    { id: 2, text: "버튼2" },
+    { id: 2, text: "버튼3" },
+    { id: 2, text: "버튼4" },
+    { id: 2, text: "버튼5" },
+  ]);
+  const [names, setNames] = useState([
+    { id: 1, name: "끔" },
+    { id: 2, name: "약불" },
+    { id: 3, name: "중불" },
+    { id: 4, name: "강불" },
+  ]);
+
   return (
     <>
       <SelectBtnWrap>
-        <SelectBtn>버튼1</SelectBtn>
-        <SelectBtn>버튼2</SelectBtn>
-        <SelectBtn>버튼3</SelectBtn>
-        <SelectBtn>버튼4</SelectBtn>
-        <SelectBtn>버튼5</SelectBtn>
+        <SelectBtn>
+          {selectButtons.map((b) => {
+            return <li key={b.id}>{b.text}</li>;
+          })}
+        </SelectBtn>
       </SelectBtnWrap>
 
       <ConditionWrap>
         <h3>2조리부 : 0분 25초</h3>
         <button>세척가능</button>
       </ConditionWrap>
+
       <InductionWrap>
         <LeftInduction>
           <h4>인덕션왼쪽</h4>
           <ul>
-            <li>끔</li>
-            <li>약불</li>
-            <li>중불</li>
-            <li>강불</li>
+            {names.map((names) => {
+              return <li key={names.id}>{names.name}</li>;
+            })}
           </ul>
         </LeftInduction>
         <MiddleInduction>
@@ -74,20 +88,25 @@ const SelectBtnWrap = styled.div`
   padding: 50px 0;
 `;
 
-const SelectBtn = styled.button`
-  width: 100px;
-  height: 50px;
-  margin-right: 20px;
-  border: none;
-  background: none;
-  background: #ffb600;
-  color: #fff;
-  font-weight: bold;
-  font-size: 1.2rem;
-  cursor: pointer;
-  border-radius: 5px;
-  :hover {
-    color: #333;
+const SelectBtn = styled.div`
+  display: flex;
+  li {
+    list-style: none;
+    width: 100px;
+    line-height: 50px;
+    margin-right: 20px;
+    border: none;
+    background: none;
+    background: #ffb600;
+    color: #fff;
+    font-weight: bold;
+    font-size: 1.2rem;
+    text-align: center;
+    cursor: pointer;
+    border-radius: 5px;
+    :hover {
+      color: #333;
+    }
   }
 `;
 
@@ -103,9 +122,15 @@ const ConditionWrap = styled.div`
   }
   button {
     display: flex;
-    padding: 20px 40px;
+    padding: 15px 40px;
     border-radius: 40px;
     font-size: 1.25rem;
+    border: none;
+    background: none;
+    outline: none;
+    cursor: pointer;
+    background: #e0e0e0;
+    border: 1px solid #5a7c84;
   }
 `;
 const InductionWrap = styled.div`
@@ -256,15 +281,15 @@ const CleanWrap = styled.div`
     text-align: center;
     font-size: 1rem;
     margin-right: 20px;
-    border: 2px solid #e0e68f;
+    border: 2px solid #8ee7fc;
     border-radius: 10px;
     cursor: pointer;
     &:last-child {
       margin-bottom: 0;
     }
-    background: #fbffcb;
+    background: #def9ff;
     :hover {
-      background: #d4e555;
+      background: #4ccae8;
       color: #fff;
     }
   }
