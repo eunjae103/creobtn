@@ -10,6 +10,11 @@ const Buttons = () => {
     { id: 5, text: "5팟" },
     { id: 6, text: "6팟" },
   ]);
+
+  const buttonValueSetting = (e) => {
+    setSelectButtons(e.target.value);
+  };
+
   const [leftButtons, setLeftButtons] = useState([
     { id: 1, text: "끔" },
     { id: 2, text: "약불" },
@@ -56,15 +61,16 @@ const Buttons = () => {
       <SelectBtnWrap>
         <SelectBtn>
           {selectButtons.map((b) => {
-            return <li key={b.id}>{b.text}</li>;
+            return (
+              <li key={b.id} onClick={buttonValueSetting}>
+                {b.text}
+              </li>
+            );
           })}
         </SelectBtn>
-      </SelectBtnWrap>
-
-      <ConditionWrap>
         <h3>{selectButtons.text}조리부 : 0분 0초</h3>
         <button>세척가능</button>
-      </ConditionWrap>
+      </SelectBtnWrap>
 
       <InductionWrap>
         <LeftInduction>
@@ -135,12 +141,36 @@ const Buttons = () => {
 const SelectBtnWrap = styled.div`
   display: flex;
   justify-content: center;
+  flex-direction: column;
   margin: 0 auto;
   padding: 20px 0;
+  overflow: hidden;
+  h3 {
+    text-align: center;
+
+    font-size: 1.5rem;
+  }
+  button {
+    width: 150px;
+    height: 50px;
+    margin: 0 auto;
+    border-radius: 40px;
+    font-size: 1.25rem;
+    border: none;
+    background: none;
+    outline: none;
+    cursor: pointer;
+    background: #e0e0e0;
+    border: 1px solid #5a7c84;
+  }
 `;
 
 const SelectBtn = styled.div`
   display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-bottom: 20px;
+
   li {
     list-style: none;
     width: 100px;
@@ -161,28 +191,6 @@ const SelectBtn = styled.div`
   }
 `;
 
-const ConditionWrap = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding-bottom: 20px;
-  h3 {
-    border: 1px solid red;
-    font-size: 1.5rem;
-  }
-  button {
-    display: flex;
-    padding: 15px 40px;
-    border-radius: 40px;
-    font-size: 1.25rem;
-    border: none;
-    background: none;
-    outline: none;
-    cursor: pointer;
-    background: #e0e0e0;
-    border: 1px solid #5a7c84;
-  }
-`;
 const InductionWrap = styled.div`
   display: flex;
 `;
