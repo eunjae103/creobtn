@@ -1,18 +1,13 @@
 import { useState } from "react";
 import styled from "styled-components";
-
+import moment from "moment";
 const Buttons = () => {
-  const [selectButtons, setSelectButtons] = useState([
-    { id: 1, text: "1팟" },
-    { id: 2, text: "2팟" },
-    { id: 3, text: "3팟" },
-    { id: 4, text: "4팟" },
-    { id: 5, text: "5팟" },
-    { id: 6, text: "6팟" },
-  ]);
+  const selectButtons = [0, 1, 2, 3, 4, 5];
+  const [changeButtons, setChangeButtons] = useState("");
 
-  const buttonValueSetting = (e) => {
-    setSelectButtons(e.target.value);
+  const onClickChange = (e) => {
+    setChangeButtons(Number(e.target.value));
+    console.log(e.target.value);
   };
 
   const [leftButtons, setLeftButtons] = useState([
@@ -60,15 +55,15 @@ const Buttons = () => {
     <>
       <SelectBtnWrap>
         <SelectBtn>
-          {selectButtons.map((b) => {
+          {selectButtons.map((b, index) => {
             return (
-              <li key={b.id} onClick={buttonValueSetting}>
-                {b.text}
+              <li key={index} value={index} onClick={onClickChange}>
+                {b + 1}번
               </li>
             );
           })}
         </SelectBtn>
-        <h3>{selectButtons.text}조리부 : 0분 0초</h3>
+        <h3>{changeButtons < 6 ? changeButtons + 1 : 0}조리부 : 0분 0초</h3>
         <button>세척가능</button>
       </SelectBtnWrap>
 
@@ -77,7 +72,11 @@ const Buttons = () => {
           <h4>인덕션왼쪽</h4>
           <ul>
             {leftButtons.map((b) => {
-              return <li key={b.id}>{b.text}</li>;
+              return (
+                <li key={b.id} value={b.text}>
+                  {b.text}
+                </li>
+              );
             })}
           </ul>
         </LeftInduction>
@@ -87,7 +86,11 @@ const Buttons = () => {
             <h4>팟각도</h4>
             <ul>
               {potAngleButtons.map((b) => {
-                return <li key={b.id}>{b.text}</li>;
+                return (
+                  <li key={b.id} value={b.text}>
+                    {b.text}
+                  </li>
+                );
               })}
             </ul>
           </PotAngleWrap>
@@ -95,7 +98,11 @@ const Buttons = () => {
             <h4>팟회전</h4>
             <ul>
               {potSpinButtons.map((b) => {
-                return <li key={b.id}>{b.text}</li>;
+                return (
+                  <li key={b.id} value={b.text}>
+                    {b.text}
+                  </li>
+                );
               })}
             </ul>
           </PotSpinWrap>
@@ -103,7 +110,11 @@ const Buttons = () => {
             <h4>세척</h4>
             <ul>
               {cleanButtons.map((b) => {
-                return <li key={b.id}>{b.text}</li>;
+                return (
+                  <li key={b.id} value={b.text}>
+                    {b.text}
+                  </li>
+                );
               })}
             </ul>
           </CleanWrap>
@@ -112,7 +123,11 @@ const Buttons = () => {
           <h4>인덕션오른쪽</h4>
           <ul>
             {rightButtons.map((b) => {
-              return <li key={b.id}>{b.text}</li>;
+              return (
+                <li key={b.id} value={b.text}>
+                  {b.text}
+                </li>
+              );
             })}
           </ul>
         </RigthInduction>
