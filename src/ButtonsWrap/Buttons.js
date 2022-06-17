@@ -9,14 +9,14 @@ const Buttons = () => {
   const [seconds, setSeconds] = useState(0);
   const [isActive, setIsActive] = useState(false);
 
-  function toggle() {
-    setIsActive(!isActive);
-  }
+  const onClickActive = () => {
+    setIsActive(true);
+  };
 
-  // function reset() {
-  //   setSeconds(0);
-  //   setIsActive(false);
-  // }
+  const reset = () => {
+    setSeconds(0);
+    setIsActive(false);
+  };
 
   useEffect(() => {
     let interval = null;
@@ -80,13 +80,17 @@ const Buttons = () => {
       [name]: value,
     });
   };
+  console.log("recipes", recipes);
+
   const [lapTime, setLapTime] = useState({ title: "", value: "" });
   const { title, value } = lapTime;
+  console.log("lap", lapTime);
   const onClickSave = (e) => {
     const { value, title } = e.target;
+
     setLapTime({ ...lapTime, [title]: value });
     // setLapTime(e.target.attributes.title.textContent);
-    console.log(e);
+    console.log("e", e);
   };
 
   return (
@@ -107,8 +111,8 @@ const Buttons = () => {
         </h3>
         <button>세척가능</button>
       </SelectBtnWrap>
-      <Btnsample onClick={toggle}>{isActive ? "Pause" : "Start"}</Btnsample>
-      {/* <Btnsample onClick={reset}>Reset</Btnsample> */}
+      {/* <Btnsample onClick={toggle}>start</Btnsample> */}
+      <Btnsample onClick={reset}>Reset</Btnsample>
       <InductionWrap>
         <LeftInduction>
           <h4>인덕션왼쪽</h4>
@@ -127,14 +131,13 @@ const Buttons = () => {
             })}
           </ul>
         </LeftInduction>
-
         <MiddleInduction>
           <PotAngleWrap>
             <h4>팟각도</h4>
             <ul>
               {potAngleButtons.map((b) => {
                 return (
-                  <li key={b.id} value={b.value} onClick={onClickSave}>
+                  <li key={b.id} value={b.value} onClick={onClickActive}>
                     {b.value}
                   </li>
                 );
@@ -146,7 +149,7 @@ const Buttons = () => {
             <ul>
               {potSpinButtons.map((b) => {
                 return (
-                  <li key={b.id} value={b.value} onClick={onClickSave}>
+                  <li key={b.id} value={b.value} onClick={onClickActive}>
                     {b.value}
                   </li>
                 );
@@ -158,7 +161,7 @@ const Buttons = () => {
             <ul>
               {cleanButtons.map((b) => {
                 return (
-                  <li key={b.id} value={b.value} onClick={onClickSave}>
+                  <li key={b.id} value={b.value} onClick={onClickActive}>
                     {b.value}
                   </li>
                 );
@@ -171,7 +174,7 @@ const Buttons = () => {
           <ul>
             {rightButtons.map((b) => {
               return (
-                <li key={b.id} value={b.value} onClick={onClickSave}>
+                <li key={b.id} value={b.value} onClick={onClickActive}>
                   {b.value}
                 </li>
               );
