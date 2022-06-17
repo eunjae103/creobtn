@@ -55,13 +55,13 @@ const Buttons = () => {
       [name]: value,
     });
   };
-  const [lapTime, setLapTime] = useState({ name: "", value: "" });
-  const { name, value } = lapTime;
+  const [lapTime, setLapTime] = useState({ title: "", value: "" });
+  const { title, value } = lapTime;
   const onClickSave = (e) => {
-    const { value, name } = e.target;
-    setLapTime({ ...lapTime, [name]: value });
+    const { value, title } = e.target;
+    setLapTime({ ...lapTime, [title]: value });
     // setLapTime(e.target.attributes.title.textContent);
-    console.log(e.target);
+    console.log(e);
   };
 
   return (
@@ -87,7 +87,6 @@ const Buttons = () => {
             {leftButtons.map((b) => {
               return (
                 <li
-                  name="인덕션왼쪽"
                   key={b.id}
                   title={b.title}
                   value={b.value}
@@ -168,7 +167,7 @@ const Buttons = () => {
           <p>레시피 : {recipeName}</p>
           <p>메모 : {recipeMemo}</p>
           <p>
-            기기작동기록 : {name}
+            기기작동기록 : {title}
             {value}
           </p>
         </div>
