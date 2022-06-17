@@ -1,9 +1,34 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import styled from "styled-components";
 import moment from "moment";
+
 const Buttons = () => {
   const selectButtons = [0, 1, 2, 3, 4, 5];
   const [changeButtons, setChangeButtons] = useState("");
+
+  const [seconds, setSeconds] = useState(0);
+  const [isActive, setIsActive] = useState(false);
+
+  function toggle() {
+    setIsActive(!isActive);
+  }
+
+  // function reset() {
+  //   setSeconds(0);
+  //   setIsActive(false);
+  // }
+
+  useEffect(() => {
+    let interval = null;
+    if (isActive) {
+      interval = setInterval(() => {
+        setSeconds((seconds) => seconds + 1);
+      }, 1000);
+    } else if (!isActive && seconds !== 0) {
+      clearInterval(interval);
+    }
+    return () => clearInterval(interval);
+  }, [isActive, seconds]);
 
   const onClickChange = (e) => {
     setChangeButtons(Number(e.target.value));
@@ -76,10 +101,14 @@ const Buttons = () => {
             );
           })}
         </SelectBtn>
-        <h3>{changeButtons < 6 ? changeButtons + 1 : 0}조리부 : 0분 0초</h3>
+        <h3>
+          {changeButtons < 6 ? changeButtons + 1 : 0}조리부 :{" "}
+          {moment().minute(0).second(seconds).format("mm분 ss초")}
+        </h3>
         <button>세척가능</button>
       </SelectBtnWrap>
-
+      <Btnsample onClick={toggle}>{isActive ? "Pause" : "Start"}</Btnsample>
+      {/* <Btnsample onClick={reset}>Reset</Btnsample> */}
       <InductionWrap>
         <LeftInduction>
           <h4>인덕션왼쪽</h4>
@@ -175,6 +204,12 @@ const Buttons = () => {
     </>
   );
 };
+
+const Btnsample = styled.button`
+  border: 1px solid red;
+  display: flex;
+  margin: 0 auto;
+`;
 const SelectBtnWrap = styled.div`
   display: flex;
   justify-content: center;

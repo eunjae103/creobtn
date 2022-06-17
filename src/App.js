@@ -4,7 +4,7 @@ import Time from "./ButtonsWrap/Time";
 import Timer from "./ButtonsWrap/Timer";
 
 function App() {
-  return <Timer />;
+  return <ButtonsWrap />;
 }
 
 export default App;
