@@ -5,31 +5,6 @@ import moment from "moment";
 const Buttons = () => {
   const selectButtons = [0, 1, 2, 3, 4, 5];
   const [changeButtons, setChangeButtons] = useState("");
-
-  const [seconds, setSeconds] = useState(0);
-  const [isActive, setIsActive] = useState(false);
-
-  const onClickActive = () => {
-    setIsActive(true);
-  };
-
-  const reset = () => {
-    setSeconds(0);
-    setIsActive(false);
-  };
-
-  useEffect(() => {
-    let interval = null;
-    if (isActive) {
-      interval = setInterval(() => {
-        setSeconds((seconds) => seconds + 1);
-      }, 1000);
-    } else if (!isActive && seconds !== 0) {
-      clearInterval(interval);
-    }
-    return () => clearInterval(interval);
-  }, [isActive, seconds]);
-
   const onClickChange = (e) => {
     setChangeButtons(Number(e.target.value));
   };
@@ -82,17 +57,38 @@ const Buttons = () => {
   };
   console.log("recipes", recipes);
 
-  const [lapTime, setLapTime] = useState({ title: "", value: "" });
-  const { title, value } = lapTime;
-  console.log("lap", lapTime);
-  const onClickSave = (e) => {
-    const { value, title } = e.target;
+  const [seconds, setSeconds] = useState(0);
+  const [isActive, setIsActive] = useState(false);
 
-    setLapTime({ ...lapTime, [title]: value });
-    // setLapTime(e.target.attributes.title.textContent);
-    console.log("e", e);
+  const reset = () => {
+    setSeconds(0);
+    setIsActive(false);
   };
 
+  useEffect(() => {
+    let interval = null;
+    if (isActive) {
+      interval = setInterval(() => {
+        setSeconds((seconds) => seconds + 1);
+      }, 1000);
+    }
+    return () => clearInterval(interval);
+  }, [isActive, seconds]);
+
+  const [lapTime, setLapTime] = useState([]);
+  const { title, value } = lapTime;
+  console.log("lap", lapTime);
+
+  const onClickSave = (e) => {
+    setLapTime({ ...lapTime, title: e.target.title, value: e.target.value });
+    setIsActive(true);
+    // setLapTime(e.target.attributes.title.textContent);
+    // const { title, value } = e.target;
+    // setLapTime({ ...lapTime, [title]: value });
+  };
+  // const onClickActive = () => {
+  //   setIsActive(true);
+  // };
   return (
     <>
       <SelectBtnWrap>
@@ -119,14 +115,14 @@ const Buttons = () => {
           <ul>
             {leftButtons.map((b) => {
               return (
-                <li
+                <button
                   key={b.id}
                   title={b.title}
                   value={b.value}
                   onClick={onClickSave}
                 >
                   {b.value}
-                </li>
+                </button>
               );
             })}
           </ul>
@@ -137,9 +133,14 @@ const Buttons = () => {
             <ul>
               {potAngleButtons.map((b) => {
                 return (
-                  <li key={b.id} value={b.value} onClick={onClickActive}>
+                  <button
+                    key={b.id}
+                    title={b.title}
+                    value={b.value}
+                    onClick={onClickSave}
+                  >
                     {b.value}
-                  </li>
+                  </button>
                 );
               })}
             </ul>
@@ -149,9 +150,14 @@ const Buttons = () => {
             <ul>
               {potSpinButtons.map((b) => {
                 return (
-                  <li key={b.id} value={b.value} onClick={onClickActive}>
+                  <button
+                    key={b.id}
+                    title={b.title}
+                    value={b.value}
+                    onClick={onClickSave}
+                  >
                     {b.value}
-                  </li>
+                  </button>
                 );
               })}
             </ul>
@@ -161,9 +167,14 @@ const Buttons = () => {
             <ul>
               {cleanButtons.map((b) => {
                 return (
-                  <li key={b.id} value={b.value} onClick={onClickActive}>
+                  <button
+                    key={b.id}
+                    title={b.title}
+                    value={b.value}
+                    onClick={onClickSave}
+                  >
                     {b.value}
-                  </li>
+                  </button>
                 );
               })}
             </ul>
@@ -174,9 +185,14 @@ const Buttons = () => {
           <ul>
             {rightButtons.map((b) => {
               return (
-                <li key={b.id} value={b.value} onClick={onClickActive}>
+                <button
+                  key={b.id}
+                  title={b.title}
+                  value={b.value}
+                  onClick={onClickSave}
+                >
                   {b.value}
-                </li>
+                </button>
               );
             })}
           </ul>
@@ -199,8 +215,7 @@ const Buttons = () => {
           <p>레시피 : {recipeName}</p>
           <p>메모 : {recipeMemo}</p>
           <p>
-            기기작동기록 : {title}
-            {value}
+            기기작동기록 :{title} {value}
           </p>
         </div>
       </Memowrap>
@@ -284,10 +299,11 @@ const LeftInduction = styled.div`
     margin: 0 auto;
     padding: 0;
   }
-  li {
+  button {
+    display: flex;
+    justify-content: center;
     width: 90px;
     line-height: 90px;
-    text-align: center;
     font-size: 1rem;
     margin-bottom: 20px;
     border: 2px solid #badd7a;
@@ -330,10 +346,11 @@ const PotAngleWrap = styled.div`
     margin: 0 auto;
     padding: 0;
   }
-  li {
+  button {
+    display: flex;
+    justify-content: center;
     width: 90px;
     line-height: 90px;
-    text-align: center;
     font-size: 1rem;
     margin-right: 20px;
     border: 2px solid #9898ff;
@@ -374,10 +391,11 @@ const PotSpinWrap = styled.div`
     margin: 0 auto;
     padding: 0;
   }
-  li {
+  button {
+    display: flex;
+    justify-content: center;
     width: 90px;
     line-height: 90px;
-    text-align: center;
     font-size: 1rem;
     margin-right: 20px;
     border: 2px solid #8ddecf;
@@ -408,10 +426,11 @@ const CleanWrap = styled.div`
     margin: 0 auto;
     padding: 0;
   }
-  li {
+  button {
+    display: flex;
+    justify-content: center;
     width: 90px;
     line-height: 90px;
-    text-align: center;
     font-size: 1rem;
     margin-right: 20px;
     border: 2px solid #8ee7fc;
@@ -443,10 +462,11 @@ const RigthInduction = styled.div`
     margin: 0 auto;
     padding: 0;
   }
-  li {
+  button {
+    display: flex;
+    justify-content: center;
     width: 90px;
     line-height: 90px;
-    text-align: center;
     font-size: 1rem;
     margin-bottom: 20px;
     border: 2px solid #badd7a;
