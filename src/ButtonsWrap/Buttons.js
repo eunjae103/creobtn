@@ -9,6 +9,12 @@ const Buttons = () => {
     setChangeButtons(Number(e.target.value));
   };
 
+  const [cleanButtonsOk, setCleanButtonOk] = useState(false);
+
+  const [cleanButtons, setCleanButtons] = useState([
+    { id: 1, title: "세척", value: "세척중" },
+    { id: 2, title: "세척", value: "정지" },
+  ]);
   const [leftButtons, setLeftButtons] = useState([
     { id: 1, title: "인덕션왼쪽", value: "끔" },
     { id: 2, title: "인덕션왼쪽", value: "약불" },
@@ -29,11 +35,6 @@ const Buttons = () => {
     { id: 2, title: "팟회전", value: "정지" },
     { id: 3, title: "팟회전", value: "원점정지" },
     { id: 4, title: "팟회전", value: "정회전" },
-  ]);
-
-  const [cleanButtons, setCleanButtons] = useState([
-    { id: 1, title: "세척", value: "세척중" },
-    { id: 2, title: "세척", value: "정지" },
   ]);
 
   const [rightButtons, setRightButtons] = useState([
@@ -76,11 +77,16 @@ const Buttons = () => {
   }, [isActive, seconds]);
 
   const [lapTime, setLapTime] = useState([]);
-  const { title, value } = lapTime;
   console.log("lap", lapTime);
 
   const onClickSave = (e) => {
-    setLapTime({ ...lapTime, title: e.target.title, value: e.target.value });
+    const { title, value } = e.target;
+    const addLapTime = lapTime.concat({
+      ...lapTime,
+      title: title,
+      value: value,
+    });
+    setLapTime(addLapTime);
     setIsActive(true);
     // setLapTime(e.target.attributes.title.textContent);
     // const { title, value } = e.target;
@@ -105,7 +111,13 @@ const Buttons = () => {
           {changeButtons < 6 ? changeButtons + 1 : 0}조리부 :{" "}
           {moment().minute(0).second(seconds).format("mm분 ss초")}
         </h3>
-        <button>세척가능</button>
+        <button
+          onClick={() => {
+            setCleanButtonOk(!cleanButtonsOk);
+          }}
+        >
+          {cleanButtonsOk ? "세척가능" : "세척불가능"}
+        </button>
       </SelectBtnWrap>
       {/* <Btnsample onClick={toggle}>start</Btnsample> */}
       <Btnsample onClick={reset}>Reset</Btnsample>
@@ -214,9 +226,19 @@ const Buttons = () => {
         <div>
           <p>레시피 : {recipeName}</p>
           <p>메모 : {recipeMemo}</p>
-          <p>
-            기기작동기록 :{title} {value}
-          </p>
+          <p>기기작동기록 :</p>
+          <ol reversed>
+            {lapTime
+              .slice(0)
+              .reverse()
+              .map((b, index) => {
+                return (
+                  <li key={index}>
+                    {b.title} - {b.value}
+                  </li>
+                );
+              })}
+          </ol>
         </div>
       </Memowrap>
     </>
