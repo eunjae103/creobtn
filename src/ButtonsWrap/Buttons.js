@@ -183,7 +183,7 @@ const Buttons = () => {
                     key={b.id}
                     title={b.title}
                     value={b.value}
-                    onClick={onClickSave}
+                    onClick={cleanButtonsOk === true ? onClickSave : null}
                   >
                     {b.value}
                   </button>
