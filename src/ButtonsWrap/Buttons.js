@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import styled from "styled-components";
 import moment from "moment";
+import { isDisabled } from "@testing-library/user-event/dist/utils";
 
 const Buttons = () => {
   const selectButtons = [0, 1, 2, 3, 4, 5];
@@ -11,15 +12,18 @@ const Buttons = () => {
 
   const [cleanButtonsOk, setCleanButtonOk] = useState(false);
 
-  const [cleanButtons, setCleanButtons] = useState([
-    { id: 1, title: "세척", value: "세척중" },
-    { id: 2, title: "세척", value: "정지" },
-  ]);
   const [leftButtons, setLeftButtons] = useState([
-    { id: 1, title: "인덕션왼쪽", value: "끔" },
-    { id: 2, title: "인덕션왼쪽", value: "약불" },
-    { id: 3, title: "인덕션왼쪽", value: "중불" },
-    { id: 4, title: "인덕션왼쪽", value: "강불" },
+    { id: 1, title: "인덕션왼쪽", value: "끔", active: false },
+    { id: 2, title: "인덕션왼쪽", value: "약불", active: false },
+    { id: 3, title: "인덕션왼쪽", value: "중불", active: false },
+    { id: 4, title: "인덕션왼쪽", value: "강불", active: false },
+  ]);
+
+  const [rightButtons, setRightButtons] = useState([
+    { id: 1, title: "인덕션오른쪽", value: "끔" },
+    { id: 2, title: "인덕션오른쪽", value: "약불" },
+    { id: 3, title: "인덕션오른쪽", value: "중불" },
+    { id: 4, title: "인덕션오른쪽", value: "강불" },
   ]);
 
   const [potAngleButtons, setPotAngleButtons] = useState([
@@ -37,11 +41,11 @@ const Buttons = () => {
     { id: 4, title: "팟회전", value: "정회전" },
   ]);
 
-  const [rightButtons, setRightButtons] = useState([
-    { id: 1, title: "인덕션오른쪽", value: "끔" },
-    { id: 2, title: "인덕션오른쪽", value: "약불" },
-    { id: 3, title: "인덕션오른쪽", value: "중불" },
-    { id: 4, title: "인덕션오른쪽", value: "강불" },
+  console.log("name", potSpinButtons);
+
+  const [cleanButtons, setCleanButtons] = useState([
+    { id: 1, title: "세척", value: "세척중" },
+    { id: 2, title: "세척", value: "정지" },
   ]);
 
   const [recipes, setRecipes] = useState({
@@ -88,6 +92,7 @@ const Buttons = () => {
     });
     setLapTime(addLapTime);
     setIsActive(true);
+
     // setLapTime(e.target.attributes.title.textContent);
     // const { title, value } = e.target;
     // setLapTime({ ...lapTime, [title]: value });
