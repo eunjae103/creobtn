@@ -11,6 +11,7 @@ const Buttons = () => {
   };
 
   const [cleanButtonsOk, setCleanButtonOk] = useState(false);
+  const [visible, setVisible] = useState(false);
 
   const [leftButtons, setLeftButtons] = useState([
     { id: 1, title: "인덕션왼쪽", value: "끔", active: false },
@@ -93,6 +94,12 @@ const Buttons = () => {
     setLapTime(addLapTime);
     setIsActive(true);
 
+    if (value === "역회전") {
+      setVisible(true);
+    } else if (value === "정회전") {
+      setVisible(true);
+    }
+
     // setLapTime(e.target.attributes.title.textContent);
     // const { title, value } = e.target;
     // setLapTime({ ...lapTime, [title]: value });
@@ -128,21 +135,25 @@ const Buttons = () => {
       <Btnsample onClick={reset}>Reset</Btnsample>
       <InductionWrap>
         <LeftInduction>
-          <h4>인덕션왼쪽</h4>
-          <ul>
-            {leftButtons.map((b) => {
-              return (
-                <button
-                  key={b.id}
-                  title={b.title}
-                  value={b.value}
-                  onClick={onClickSave}
-                >
-                  {b.value}
-                </button>
-              );
-            })}
-          </ul>
+          {visible === true && (
+            <>
+              <h4>인덕션왼쪽</h4>
+              <ul>
+                {leftButtons.map((b) => {
+                  return (
+                    <button
+                      key={b.id}
+                      title={b.title}
+                      value={b.value}
+                      onClick={onClickSave}
+                    >
+                      {b.value}
+                    </button>
+                  );
+                })}
+              </ul>
+            </>
+          )}
         </LeftInduction>
         <MiddleInduction>
           <PotAngleWrap>
@@ -198,21 +209,25 @@ const Buttons = () => {
           </CleanWrap>
         </MiddleInduction>
         <RigthInduction>
-          <h4>인덕션오른쪽</h4>
-          <ul>
-            {rightButtons.map((b) => {
-              return (
-                <button
-                  key={b.id}
-                  title={b.title}
-                  value={b.value}
-                  onClick={onClickSave}
-                >
-                  {b.value}
-                </button>
-              );
-            })}
-          </ul>
+          {visible === true && (
+            <>
+              <h4>인덕션오른쪽</h4>
+              <ul>
+                {rightButtons.map((b) => {
+                  return (
+                    <button
+                      key={b.id}
+                      title={b.title}
+                      value={b.value}
+                      onClick={onClickSave}
+                    >
+                      {b.value}
+                    </button>
+                  );
+                })}
+              </ul>
+            </>
+          )}
         </RigthInduction>
       </InductionWrap>
       <Memowrap>
