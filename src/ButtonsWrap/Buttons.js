@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import styled from "styled-components";
 import moment from "moment";
-import { isDisabled } from "@testing-library/user-event/dist/utils";
 
 const Buttons = () => {
   const selectButtons = [0, 1, 2, 3, 4, 5];
@@ -85,11 +84,13 @@ const Buttons = () => {
   console.log("lap", lapTime);
 
   const onClickSave = (e) => {
+    let time = moment().minute(0).second(seconds).format("m분 ss초");
     const { title, value } = e.target;
     const addLapTime = lapTime.concat({
-      ...lapTime,
+      // ...lapTime,
       title: title,
       value: value,
+      time: time,
     });
     setLapTime(addLapTime);
     setIsActive(true);
@@ -254,7 +255,7 @@ const Buttons = () => {
               .map((b, index) => {
                 return (
                   <li key={index}>
-                    {b.title} - {b.value}
+                    {b.title} - {b.value} ({b.time})
                   </li>
                 );
               })}
